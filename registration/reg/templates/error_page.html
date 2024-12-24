@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block start %}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    nav {
+        text-align: center;
+        margin: 20px 0; /* Space above and below the navigation */
+    }
+
+    nav a {
+        margin: 0 15px;
+        text-decoration: none;
+        color: #007BFF; /* Bootstrap primary color */
+        font-weight: bold; /* Make links bold */
+    }
+
+    nav a:hover {
+        text-decoration: underline; /* Underline on hover for better visibility */
+    }
+</style>
+
+<h1>Registration Failed!Wrong OTP , please Register again</h1>
+
+<nav>
+    <a href="/reg_page/">Register</a> |
+    <a href="/infopage/">Info</a>
+</nav>
+
+{% endblock %}

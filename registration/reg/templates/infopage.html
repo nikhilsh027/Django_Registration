@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+{% block start %}
+<style>
+    :root {
+        --primary-purple: #8A2BE2;
+        --secondary-purple: #9370DB;
+        --dark-bg: #121212;
+        --card-bg: #1E1E1E;
+        --text-primary: #FFFFFF;
+        --text-secondary: #B3B3B3;
+    }
+
+    body {
+        background: linear-gradient(135deg, var(--dark-bg) 0%, #2D1F3D 100%);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--text-primary);
+        margin: 0;
+        padding: 2rem;
+    }
+
+    h1 {
+        text-align: center;
+        color: var(--text-primary);
+        margin-bottom: 2rem;
+        position: relative;
+        padding-bottom: 15px;
+        font-weight: 700;
+    }
+
+    h1::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary-purple), var(--secondary-purple));
+        border-radius: 3px;
+    }
+
+    nav {
+        text-align: center;
+        margin-bottom: 2rem;
+        padding: 1rem;
+        background: var(--card-bg);
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(138, 43, 226, 0.2);
+    }
+
+    nav a {
+        margin: 0 15px;
+        text-decoration: none;
+        color: var(--secondary-purple);
+        font-weight: 500;
+        transition: all 0.3s ease;
+        padding: 8px 20px;
+        border-radius: 8px;
+    }
+
+    nav a:hover {
+        color: var(--primary-purple);
+        background: rgba(138, 43, 226, 0.1);
+    }
+
+    h2 {
+        color: var(--text-secondary);
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    li {
+        background: var(--card-bg);
+        border: 1px solid rgba(138, 43, 226, 0.2);
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 0.5s ease-out;
+        transition: transform 0.3s ease;
+    }
+
+    li:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 20px rgba(138, 43, 226, 0.3);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    strong {
+        color: var(--primary-purple);
+        font-weight: 600;
+        display: inline-block;
+        width: 120px;
+    }
+
+    .password {
+        display: none;
+        color: var(--text-secondary);
+        background: rgba(138, 43, 226, 0.1);
+        padding: 2px 8px;
+        border-radius: 4px;
+        margin-left: 5px;
+    }
+
+    input[type="checkbox"] {
+        margin-left: 10px;
+        accent-color: var(--primary-purple);
+    }
+
+    input[type="checkbox"] + label {
+        color: var(--text-secondary);
+        margin-left: 5px;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+    input[type="checkbox"]:hover + label {
+        color: var(--primary-purple);
+    }
+
+    p {
+        text-align: center;
+        color: var(--text-secondary);
+        font-style: italic;
+        padding: 2rem;
+        background: var(--card-bg);
+        border-radius: 10px;
+        margin: 2rem auto;
+        max-width: 400px;
+    }
+
+    @media (max-width: 768px) {
+        body {
+            padding: 1rem;
+        }
+
+        li {
+            padding: 1rem;
+        }
+
+        strong {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+    }
+</style>
+
+<h1>User Registration Information</h1>
+<nav>
+    <a href="/reg_page/">Register</a> |
+    <a href="/">Home</a>
+</nav>
+
+{% if user_name %}
+    <h2>Registered Users:</h2>
+    <ul>
+        {% for registration in user_name %}
+            <li>
+                <strong>Username:</strong> {{ registration.user_name }}<br>
+                <strong>Phone Number:</strong> {{ registration.ph_number }}<br>
+                <strong>Email:</strong> {{ registration.email }}<br>
+                <strong>Password:</strong>
+                <span class="password" id="password-{{ forloop.counter }}">{{ registration.password }}</span>
+                <input type="checkbox" id="toggle-password-{{ forloop.counter }}" onclick="togglePassword({{ forloop.counter }})">
+                <label for="toggle-password-{{ forloop.counter }}">Show Password</label>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No registrations found.</p>
+{% endif %}
+
+<script>
+    function togglePassword(index) {
+        var passwordField = document.getElementById('password-' + index);
+        var checkbox = document.getElementById('toggle-password-' + index);
+        if (checkbox.checked) {
+            passwordField.style.display = 'inline';
+        } else {
+            passwordField.style.display = 'none';
+        }
+    }
+</script>
+{% endblock %}
